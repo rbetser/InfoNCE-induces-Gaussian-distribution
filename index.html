@@ -1,224 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-<meta name="description" content="InfoNCE Induces Gaussian Distribution — ICLR 2026"/>
-<title>InfoNCE Induces Gaussian Distribution — ICLR 2026, Oral (top 1.18%) </title>
+  <meta name="description" content="InfoNCE Induces Gaussian Distribution — ICLR 2026" />
+  <title>InfoNCE Induces Gaussian Distribution — ICLR 2026, Oral (top 1.18%)</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/ad96f96272.js" crossorigin="anonymous"></script>
 
-<style>
-:root {
-  --accent:#1e3a8a;
-  --accent-dark:#142a63;
-  --bg:#f7f9fc;
-}
-body {
-  font-family:'Roboto',sans-serif;
-  background:var(--bg);
-  margin:0;
-  padding-top:70px;
-  color:#222;
-}
-h1,h2,h3 { font-family:'Poppins',sans-serif; }
-.topnav {
-  position:fixed; top:0; left:0; right:0;
-  background:var(--accent);
-  display:flex; justify-content:center; gap:10px;
-  padding:10px;
-  z-index:1000;
-}
-.topnav a { color:white; text-decoration:none; font-weight:600; }
-section {
-  padding:60px 8%;
-  max-width:1100px;
-  margin:auto;
-}
-h1 { text-align:center; font-size:2.6rem; margin-bottom:10px; }
-h2 { text-align:center; margin-bottom:20px; color:var(--accent); }
-p { line-height:1.6; font-size:1.05rem; }
+  <style>
+    :root {
+      --accent:#a259ff;
+      --accent-dark:#6f2da8;
+      --bg:#fafafa;
+      --card-bg:linear-gradient(145deg,#ffffff,#f2f0ff);
+    }
+    html,body { height:100%; }
+    body {
+      font-family:'Roboto',sans-serif;
+      background:var(--bg);
+      color:#222;
+      margin:0;
+      padding-top:70px;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    h1,h2,h3{ font-family:'Poppins',sans-serif; margin:0; }
+    a { color:#4b0082; text-decoration:none; position:relative; transition:0.24s; }
+    a:hover { color:var(--accent); }
+    a::after { content:''; position:absolute; width:0; height:2px; bottom:-2px; left:0; background-color:var(--accent); transition:width 0.25s ease-in-out; }
+    a:hover::after{ width:100%; }
 
-.btn-row { text-align:center; margin-top:20px; }
-.btn {
-  background:var(--accent);
-  color:white;
-  padding:8px 18px;
-  border-radius:8px;
-  text-decoration:none;
-  margin:5px;
-  display:inline-block;
-}
-.btn:hover { background:var(--accent-dark); }
+    .topnav {
+      position:fixed; top:0; left:0; right:0;
+      background:var(--accent);
+      display:flex; justify-content:center; gap:6px;
+      z-index:1000;
+      box-shadow:0 4px 6px rgba(0,0,0,0.1);
+      padding:10px 10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .topnav a { color:white; padding:8px 14px; text-align:center; font-weight:600; font-size:0.98rem; border-radius:6px; }
+    .topnav a:hover { background:rgba(255,255,255,0.12); }
 
-.authors { text-align:center; margin-top:15px; font-weight:500; }
+    section {
+      width:100%;
+      padding:48px 5%;
+      margin:20px 0;
+      border-radius:20px;
+      box-shadow:0 10px 20px rgba(162,89,255,0.12);
+      transition:transform 0.25s, box-shadow 0.25s;
+      background:var(--card-bg);
+    }
+    section:hover { transform:translateY(-6px); box-shadow:0 20px 40px rgba(162,89,255,0.18); }
+    .section-content { max-width:1000px; margin:0 auto; }
 
-.abstract-box {
-  background:white;
-  padding:30px;
-  border-radius:14px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.05);
-}
-footer {
-  text-align:center;
-  padding:40px;
-  font-size:0.9rem;
-  color:#666;
-}
-</style>
+    h1 { font-size:2.6rem; font-weight:800; text-align:center; color:var(--accent); line-height:1.05; }
+    h2 { font-size:1.8rem; color:#4b0082; margin-bottom:14px; text-align:center; }
+    p, li { font-size:1.05rem; line-height:1.6; color:#333; margin:0 0 12px 0; }
+
+    .authors-container { display:flex; justify-content:center; gap:28px; margin-top:14px; flex-wrap:wrap; align-items:center; }
+    .author { display:flex; flex-direction:column; align-items:center; transition:transform 0.2s; }
+    .author a { margin-top:6px; color:#2b1b6a; font-weight:600; font-size:0.97rem; text-align:center; }
+    .author img { width:68px; height:68px; border-radius:50%; object-fit:cover; margin-bottom:6px; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer; box-shadow:0 6px 12px rgba(0,0,0,0.06); }
+    .author:hover img { transform:scale(1.08); }
+    .vertical-line { border-left:2px solid var(--accent); height:70px; margin:0 28px; align-self:center; }
+
+    .btn-row { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    .btn-custom {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 14px;
+      background:var(--accent);
+      color:#fff; border:none; border-radius:9px;
+      font-weight:600; transition:0.18s; cursor:pointer; text-decoration:none;
+    }
+    .btn-custom img { height:18px; width:auto; display:block; }
+    .btn-custom i { font-size:14px; }
+    .btn-custom:hover { background:var(--accent-dark); transform:translateY(-2px); }
+
+    /* InfoNCE page wants FULL-width abstract text + FULL-width poster (like your first file). */
+    .abstract-container { display:flex; gap:18px; align-items:stretch; justify-content:center; flex-wrap:wrap; margin-top:8px; }
+    .abstract-text { flex:1 1 100%; min-width:280px; display:flex; flex-direction:column; }
+    .poster-wrapper { flex:1 1 100%; min-width:280px; display:flex; flex-direction:column; margin-top:6px; }
+    .poster-wrapper img { width:100%; height:auto; cursor:pointer; border-radius:16px; margin:auto; display:block; box-shadow:0 10px 28px rgba(162,89,255,0.12); }
+
+    .insights-container { display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start; justify-content:center; margin-top:8px; }
+    .insights-grid {
+      flex: 1 1 100%;
+      display: grid;
+      grid-template-columns: 1fr;   /* ONE insight per row */
+      gap: 28px;
+    }
+    @media (max-width: 700px) { .insights-grid { grid-template-columns: 1fr; } }
+
+    .card-insight {
+      display: flex;
+      flex-direction: column;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #fff, #f0f0f5);
+      box-shadow: 0 8px 22px rgba(162, 89, 255, 0.12);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      padding: 20px;
+    }
+    .card-insight:hover { transform: translateY(-8px); box-shadow: 0 22px 40px rgba(162, 89, 255, 0.2); }
+    .card-insight .upper { flex: 0 0 auto; text-align: center; }
+    .card-insight .upper h3 { color: var(--accent); margin: 0 0 12px 0; }
+    .card-insight .bottom {
+      display: flex;
+      flex-direction: row;      /* image LEFT, text RIGHT */
+      gap: 24px;
+      align-items: center;
+    }
+
+    .card-insight .bottom .left {
+      flex: 0 0 55%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card-insight .bottom .left img {
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 14px;
+    }
+
+    .card-insight .bottom .right {
+      flex: 0 0 45%;
+    }
+    @media (max-width:900px) {
+      .card-insight .bottom { flex-direction:column; }
+      .card-insight .bottom .left,
+      .card-insight .bottom .right { flex:1 1 100%; }
+    }
+
+    iframe { border-radius:14px; max-width:100%; width:100%; height:450px; box-shadow:0 8px 28px rgba(162,89,255,0.12); margin-top:20px; display:block; margin-left:auto; margin-right:auto; }
+    pre { background:#eaeaea; padding:16px; border-radius:12px; overflow-x:auto; color:#222; }
+    footer { text-align:center; padding:44px 20px; font-size:0.95rem; color:#555; }
+
+    /* Modal */
+    .modal { display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color: rgba(0,0,0,0.9); }
+    .modal-inner { position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+    .modal-content { max-width:92%; max-height:92%; border-radius:12px; box-shadow:0 18px 40px rgba(0,0,0,0.6); transform-origin:center center; transition:transform 0.12s; }
+    .close { position:absolute; top:18px; right:24px; color:#fff; font-size:36px; font-weight:bold; transition:0.18s; cursor:pointer; background:transparent; border:none; }
+    .close:hover { color:#bbb; }
+  </style>
 </head>
 
 <body>
-
-<div class="topnav">
-  <a href="#home">Home</a>
-  <a href="#abstract">Abstract</a>
-  <a href="#contributions">Contributions</a>
-  <a href="#bibtex">BibTeX</a>
-</div>
-
-<!-- Hero Section -->
-<section id="hero" aria-label="Hero section">
-  <div class="section-content">
-    <h1>InfoNCE Induces Gaussian Distribution</h1>
-    <h2>International Conference on Learning Representations (ICLR) 2026</h2>
-
-    <!-- Authors -->
-    <div class="authors-container">
-
-      <div class="author">
-        <a href="#" aria-label="Roy Betser">
-          <img src="misc/roy.JPG" alt="Roy Betser portrait">
-        </a>
-        <a href="#">Roy Betser*</a>
-      </div>
-
-      <div class="author">
-        <a href="#" aria-label="Eyal Gofer">
-          <img src="misc/eyal.jpg" alt="Missing portrait">
-        </a>
-        <a href="#">Eyal Gofer*</a>
-      </div>
-
-      <div class="author">
-        <a href="https://yossilevii100.github.io/" aria-label="Meir Yossef Levi">
-          <img src="misc/yossi.jfif" alt="Meir Yossef Levi portrait">
-        </a>
-        <a href="#">Meir Yossef Levi</a>
-      </div>
-
-      <div class="author">
-        <a href="https://guygilboa.net.technion.ac.il" aria-label="Guy Gilboa">
-          <img src="misc/guy.png" alt="Guy Gilboa portrait">
-        </a>
-        <a href="https://guygilboa.net.technion.ac.il">Guy Gilboa</a>
-      </div>
-
-      <div class="vertical-line" aria-hidden="true"></div>
-
-      <!-- Affiliation -->
-      <div class="author">
-        <a href="https://www.technion.ac.il/en/" aria-label="Technion website">
-          <img src="misc/technion.png" alt="Technion logo" style="background:black;">
-        </a>
-        <a href="https://www.technion.ac.il/en/">Technion — Israel Institute of Technology</a>
-      </div>
-
-    </div>
-
-    <p style="text-align:center; margin-top:15px; font-size:0.9rem;">
-      * Equal contribution
-    </p>
-
+  <!-- Top Navigation -->
+  <div class="topnav" role="navigation" aria-label="Main navigation">
+    <a href="#hero">Home</a>
+    <a href="#abstract">Abstract</a>
+    <a href="#insights">Key Insights</a>
+    <a href="#related-papers">Related papers</a>
+    <a href="#bibtex">BibTeX</a>
   </div>
-</section>
 
-<!-- Abstract + Poster + 4 Highlights -->
-<section id="abstract" aria-label="Abstract section">
-  <div class="section-content">
-    <h2>Abstract</h2>
+  <!-- Hero Section -->
+  <section id="hero" aria-label="Hero section">
+    <div class="section-content">
+      <h1>InfoNCE Induces Gaussian Distribution</h1>
+      <h2>International Conference on Learning Representations (ICLR) 2026</h2>
 
-    <!-- Full-width abstract -->
-    <p>
-      Contrastive learning has become a cornerstone of modern representation learning, enabling scalable training on massive unlabeled data.
-      We show that the population InfoNCE objective induces asymptotically Gaussian structure in representations that emerge from contrastive training, and establish this through two complementary analytical routes.
-      We support the analysis with experiments on synthetic data and CIFAR-10, demonstrating consistent Gaussian behavior across settings and architectures.
-    </p>
-
-    <!-- Full-width poster -->
-    <div style="margin-top:18px;">
-      <img
-        id="abstract-teaser"
-        src="misc/poster.png"
-        alt="Poster"
-        style="width:100%; height:auto; border-radius:16px; box-shadow:0 10px 28px rgba(162,89,255,0.12); cursor:pointer;"
-      >
-    </div>
-
-    <!-- 4 cards -->
-    <div class="insights-container" style="margin-top:34px;">
-      <div class="insights-grid" role="list">
-
-        <div class="card-insight">
-          <div class="upper"><h3>Route 1: Empirical idealization</h3></div>
-          <div class="bottom">
-            <div class="left"><img src="misc/route1_plateau_thinshell.png" alt="Route 1 diagram"></div>
-            <div class="right">
-              <p>
-                Assuming (i) an alignment plateau and (ii) thin-shell norm concentration, the population objective reduces to spherical uniformity.
-                By the spherical CLT, fixed-dimensional projections become Gaussian as dimension grows.
-              </p>
-            </div>
-          </div>
+      <!-- Authors -->
+      <div class="authors-container">
+        <div class="author">
+          <a href="#" aria-label="Roy Betser">
+            <img src="misc/roy.JPG" alt="Roy Betser portrait">
+          </a>
+          <a href="#">Roy Betser*</a>
         </div>
 
-        <div class="card-insight">
-          <div class="upper"><h3>Route 2: Regularized objective</h3></div>
-          <div class="bottom">
-            <div class="left"><img src="misc/route2_regularized.png" alt="Regularized route diagram"></div>
-            <div class="right">
-              <p>
-                With a vanishing convex regularizer promoting low norm and high entropy, the isotropic solution is prioritized at the population level.
-                This yields the same asymptotic Gaussian structure without relying on training dynamics and with a much milder assumption.
-              </p>
-            </div>
-          </div>
+        <div class="author">
+          <a href="#" aria-label="Eyal Gofer">
+            <img src="misc/eyal.jpg" alt="Missing portrait">
+          </a>
+          <a href="#">Eyal Gofer*</a>
         </div>
 
-        <div class="card-insight">
-          <div class="upper"><h3>Synthetic experiments</h3></div>
-          <div class="bottom">
-            <div class="left"><img src="misc/synthetic_gaussianity.png" alt="Synthetic results"></div>
-            <div class="right">
-              <p>
-                Across Laplace, Gaussian-mixture, and discrete sparse-binary inputs, InfoNCE training drives norm concentration and coordinate-wise normality.
-                The binary setting rules out latent Gaussian recovery, supporting Gaussianity as an induced effect.
-              </p>
-            </div>
-          </div>
+        <div class="author">
+          <a href="https://yossilevii100.github.io/" aria-label="Meir Yossef Levi">
+            <img src="misc/yossi.jfif" alt="Meir Yossef Levi portrait">
+          </a>
+          <a href="#">Meir Yossef Levi</a>
         </div>
 
-        <div class="card-insight">
-          <div class="upper"><h3>CIFAR-10: supervised vs contrastive (ResNet-18)</h3></div>
-          <div class="bottom">
-            <div class="left"><img src="misc/cifar_resnet18_supervised_vs_contrastive.png" alt="CIFAR comparison"></div>
-            <div class="right">
-              <p>
-                With the same ResNet-18 architecture, contrastive training yields near-Gaussian coordinates and tighter norm concentration,
-                while supervised training shows substantial deviations from Gaussianity.
-              </p>
-            </div>
-          </div>
+        <div class="author">
+          <a href="https://guygilboa.net.technion.ac.il" aria-label="Guy Gilboa">
+            <img src="misc/guy.png" alt="Guy Gilboa portrait">
+          </a>
+          <a href="https://guygilboa.net.technion.ac.il">Guy Gilboa</a>
         </div>
 
+        <div class="vertical-line" aria-hidden="true"></div>
+
+        <!-- Affiliation -->
+        <div class="author">
+          <a href="https://www.technion.ac.il/en/" aria-label="Technion website">
+            <img src="misc/technion.png" alt="Technion logo" style="background:black;">
+          </a>
+          <a href="https://www.technion.ac.il/en/">Technion — Israel Institute of Technology</a>
+        </div>
+      </div>
+
+      <p style="text-align:center; margin-top:15px; font-size:0.9rem;">
+        * Equal contribution
+      </p>
+
+      <!-- Buttons row (kept template style; fill links when you have them) -->
+      <div class="btn-row" role="toolbar" aria-label="Primary links">
+        <a class="btn-custom" href="#" target="_blank" rel="noopener" aria-label="Open paper">
+          <i class="fas fa-file-alt" aria-hidden="true"></i> Paper (coming soon)
+        </a>
+        <a class="btn-custom" href="#" target="_blank" rel="noopener" aria-label="Open code">
+          <i class="fab fa-github" aria-hidden="true"></i> Code (coming soon)
+        </a>
+        <a class="btn-custom" href="#" aria-label="Watch video">
+          <i class="fas fa-video" aria-hidden="true"></i> Video (coming soon)
+        </a>
       </div>
     </div>
+  </section>
 
+  <!-- Abstract + Poster -->
+  <section id="abstract" aria-label="Abstract section">
+    <div class="section-content">
+      <h2>Abstract</h2>
+
+      <div class="abstract-container">
+        <div class="abstract-text">
+          <p>
+            Contrastive learning has become a cornerstone of modern representation learning, enabling scalable training on massive unlabeled data.
+            We show that the population InfoNCE objective induces asymptotically Gaussian structure in representations that emerge from contrastive training, and establish this through two complementary analytical routes.
+            We support the analysis with experiments on synthetic data and CIFAR-10, demonstrating consistent Gaussian behavior across settings and architectures.
+          </p>
+        </div>
+
+        <div class="poster-wrapper">
+          <img
+            id="abstract-teaser"
+            src="misc/poster.png"
+            alt="Poster"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal for poster fullscreen -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-inner" id="modal-inner">
+      <button class="close" id="modal-close" aria-label="Close image">&times;</button>
+      <img class="modal-content" id="modal-img" src="" alt="Expanded view">
+    </div>
   </div>
-</section>
 
-<!-- Related Papers Section -->
+  <!-- Key Insights -->
+  <section id="insights" aria-label="Key insights">
+    <div class="section-content">
+      <h2>Key Insights</h2>
+      <div class="insights-container">
+        <div class="insights-grid" role="list">
+
+          <div class="card-insight">
+            <div class="upper"><h3>Route 1: Empirical idealization</h3></div>
+            <div class="bottom">
+              <div class="left"><img src="misc/route1_plateau_thinshell.png" alt="Route 1 diagram"></div>
+              <div class="right">
+                <p>
+                  Assuming (i) an alignment plateau and (ii) thin-shell norm concentration, the population objective reduces to spherical uniformity.
+                  By the spherical CLT, fixed-dimensional projections become Gaussian as dimension grows.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-insight">
+            <div class="upper"><h3>Route 2: Regularized objective</h3></div>
+            <div class="bottom">
+              <div class="left"><img src="misc/route2_regularized.png" alt="Regularized route diagram"></div>
+              <div class="right">
+                <p>
+                  With a vanishing convex regularizer promoting low norm and high entropy, the isotropic solution is prioritized at the population level.
+                  This yields the same asymptotic Gaussian structure without relying on training dynamics and with a much milder assumption.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-insight">
+            <div class="upper"><h3>Synthetic experiments</h3></div>
+            <div class="bottom">
+              <div class="left"><img src="misc/synthetic_gaussianity.png" alt="Synthetic results"></div>
+              <div class="right">
+                <p>
+                  Across Laplace, Gaussian-mixture, and discrete sparse-binary inputs, InfoNCE training drives norm concentration and coordinate-wise normality.
+                  The binary setting rules out latent Gaussian recovery, supporting Gaussianity as an induced effect.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-insight">
+            <div class="upper"><h3>CIFAR-10: supervised vs contrastive (ResNet-18)</h3></div>
+            <div class="bottom">
+              <div class="left"><img src="misc/cifar_resnet18_supervised_vs_contrastive.png" alt="CIFAR comparison"></div>
+              <div class="right">
+                <p>
+                  With the same ResNet-18 architecture, contrastive training yields near-Gaussian coordinates and tighter norm concentration,
+                  while supervised training shows substantial deviations from Gaussianity.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Papers Section -->
   <section id="related-papers" aria-label="Related Papers">
     <div class="section-content">
       <h2>Related Papers</h2>
@@ -246,22 +355,96 @@ footer {
       </ul>
     </div>
   </section>
-  
-<section id="bibtex">
-  <h2>BibTeX</h2>
-<pre>
-@inproceedings{betser2026infonce,
+
+  <!-- BibTeX -->
+  <section id="bibtex" aria-label="BibTeX">
+    <div class="section-content">
+      <h2>BibTeX</h2>
+      <div style="position: relative; display: flex; flex-direction: column; max-width:700px;">
+        <pre id="bibtex-text" style="margin:0; padding-bottom:40px;">@inproceedings{betser2026infonce,
   title     = {InfoNCE Induces Gaussian Distribution},
   author    = {Betser, Roy and Gofer, Eyal and Levi, Meir Yossef and Gilboa, Guy},
   booktitle = {International Conference on Learning Representations (ICLR)},
   year      = {2026}
-}
-</pre>
-</section>
+}</pre>
+        <button class="btn-custom" id="copy-bibtex-btn" style="position:absolute; bottom:0; right:0; margin:10px;">
+          Copy BibTeX
+        </button>
+      </div>
+    </div>
+  </section>
 
-<footer>
-© 2026 Authors
-</footer>
+  <footer>
+    &copy; 2026 Authors
+  </footer>
 
+  <!-- Scripts -->
+  <script>
+    // Copy BibTeX
+    const copyBtn = document.getElementById('copy-bibtex-btn');
+    const bibtexText = document.getElementById('bibtex-text');
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(bibtexText.innerText)
+        .then(() => {
+          copyBtn.innerText = 'Copied!';
+          setTimeout(() => { copyBtn.innerText = 'Copy BibTeX'; }, 1500);
+        })
+        .catch(() => {
+          copyBtn.innerText = 'Failed';
+          setTimeout(() => { copyBtn.innerText = 'Copy BibTeX'; }, 1500);
+        });
+    });
+
+    // Modal poster fullscreen
+    (function(){
+      const modal = document.getElementById('modal');
+      const modalImg = document.getElementById('modal-img');
+      const teaser = document.getElementById('abstract-teaser');
+      const closeBtn = document.getElementById('modal-close');
+      let scale = 1;
+
+      function openModal(src, alt) {
+        modalImg.src = src;
+        modalImg.alt = alt || '';
+        scale = 1;
+        modalImg.style.transform = 'scale(1)';
+        modal.style.display = 'block';
+        modal.setAttribute('aria-hidden', 'false');
+        closeBtn.focus();
+      }
+      function closeModal() {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        modalImg.src = '';
+      }
+
+      if (teaser) teaser.addEventListener('click', () => openModal(teaser.src, teaser.alt));
+      closeBtn.addEventListener('click', closeModal);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'block') closeModal();
+      });
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      modalImg.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = -e.deltaY;
+        if (delta > 0) scale = Math.min(3, scale + 0.1);
+        else scale = Math.max(0.6, scale - 0.1);
+        modalImg.style.transform = 'scale(' + scale + ')';
+      }, { passive: false });
+    })();
+
+    // Smooth scroll
+    (function(){
+      const navLinks = document.querySelectorAll('.topnav a[href^="#"]');
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const id = link.getAttribute('href').slice(1);
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
