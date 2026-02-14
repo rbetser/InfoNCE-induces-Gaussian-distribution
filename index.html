@@ -83,11 +83,10 @@
     .btn-custom i { font-size:14px; }
     .btn-custom:hover { background:var(--accent-dark); transform:translateY(-2px); }
 
-    /* InfoNCE page wants FULL-width abstract text + FULL-width poster (like your first file). */
     .abstract-container { display:flex; gap:18px; align-items:stretch; justify-content:center; flex-wrap:wrap; margin-top:8px; }
-    .abstract-text { flex:1 1 100%; min-width:280px; display:flex; flex-direction:column; }
-    .poster-wrapper { flex:1 1 100%; min-width:280px; display:flex; flex-direction:column; margin-top:6px; }
-    .poster-wrapper img { width:100%; height:auto; cursor:pointer; border-radius:16px; margin:auto; display:block; box-shadow:0 10px 28px rgba(162,89,255,0.12); }
+    .abstract-text, .abstract-teaser-wrapper { flex:1 1 45%; min-width:280px; display:flex; flex-direction:column; }
+    .abstract-teaser-wrapper img { object-fit:contain; width:100%; max-width:420px; cursor:pointer; border-radius:14px; margin:auto; display:block; }
+    @media (max-width:900px) { .abstract-text, .abstract-teaser-wrapper { flex:1 1 100%; } }
 
     .insights-container { display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start; justify-content:center; margin-top:8px; }
     .insights-grid {
@@ -117,13 +116,13 @@
       gap: 24px;
       align-items: center;
     }
-
+    
     .card-insight .bottom .left {
       flex: 0 0 55%;
       display: flex;
       justify-content: center;
     }
-
+    
     .card-insight .bottom .left img {
       width: 100%;
       max-width: 520px;
@@ -131,14 +130,37 @@
       object-fit: contain;
       border-radius: 14px;
     }
-
+    
     .card-insight .bottom .right {
       flex: 0 0 45%;
     }
     @media (max-width:900px) {
-      .card-insight .bottom { flex-direction:column; }
       .card-insight .bottom .left,
       .card-insight .bottom .right { flex:1 1 100%; }
+    }
+
+    .dataset-images {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .dataset-images img {
+      height: 220px;          /* SAME height */
+      width: auto;            /* auto-adjust width */
+      object-fit: contain;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(162,89,255,0.12);
+    }
+    
+    /* Mobile-friendly */
+    @media (max-width: 700px) {
+      .dataset-images img {
+        height: 180px;
+      }
     }
 
     iframe { border-radius:14px; max-width:100%; width:100%; height:450px; box-shadow:0 8px 28px rgba(162,89,255,0.12); margin-top:20px; display:block; margin-left:auto; margin-right:auto; }
@@ -160,6 +182,7 @@
     <a href="#hero">Home</a>
     <a href="#abstract">Abstract</a>
     <a href="#insights">Key Insights</a>
+    <a href="#datasets">Datasets</a>
     <a href="#related-papers">Related papers</a>
     <a href="#bibtex">BibTeX</a>
   </div>
@@ -197,12 +220,12 @@
           <a href="https://guygilboa.net.technion.ac.il" aria-label="Guy Gilboa">
             <img src="misc/guy.png" alt="Guy Gilboa portrait">
           </a>
-          <a href="https://guygilboa.net.technion.ac.il">Guy Gilboa</a>
+          <a href="#">Guy Gilboa</a>
         </div>
 
         <div class="vertical-line" aria-hidden="true"></div>
 
-        <!-- Affiliation -->
+        <!-- Affiliations -->
         <div class="author">
           <a href="https://www.technion.ac.il/en/" aria-label="Technion website">
             <img src="misc/technion.png" alt="Technion logo" style="background:black;">
@@ -215,12 +238,12 @@
         * Equal contribution
       </p>
 
-      <!-- Buttons row (kept template style; fill links when you have them) -->
+      <!-- Buttons row (template intact; placeholders left as coming soon) -->
       <div class="btn-row" role="toolbar" aria-label="Primary links">
         <a class="btn-custom" href="#" target="_blank" rel="noopener" aria-label="Open paper">
           <i class="fas fa-file-alt" aria-hidden="true"></i> Paper (coming soon)
         </a>
-        <a class="btn-custom" href="#" target="_blank" rel="noopener" aria-label="Open code">
+        <a class="btn-custom" href="#" target="_blank" rel="noopener" aria-label="Open code on GitHub">
           <i class="fab fa-github" aria-hidden="true"></i> Code (coming soon)
         </a>
         <a class="btn-custom" href="#" aria-label="Watch video">
@@ -230,11 +253,10 @@
     </div>
   </section>
 
-  <!-- Abstract + Poster -->
+  <!-- Abstract + Teaser (TEMPLATE KEPT: split text + teaser) -->
   <section id="abstract" aria-label="Abstract section">
     <div class="section-content">
       <h2>Abstract</h2>
-
       <div class="abstract-container">
         <div class="abstract-text">
           <p>
@@ -243,19 +265,14 @@
             We support the analysis with experiments on synthetic data and CIFAR-10, demonstrating consistent Gaussian behavior across settings and architectures.
           </p>
         </div>
-
-        <div class="poster-wrapper">
-          <img
-            id="abstract-teaser"
-            src="misc/poster.png"
-            alt="Poster"
-          >
+        <div class="abstract-teaser-wrapper">
+          <img id="abstract-teaser" src="misc/poster.png" alt="Poster">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Modal for poster fullscreen -->
+  <!-- Modal for teaser fullscreen -->
   <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal-inner" id="modal-inner">
       <button class="close" id="modal-close" aria-label="Close image">&times;</button>
@@ -263,7 +280,7 @@
     </div>
   </div>
 
-  <!-- Key Insights -->
+  <!-- Key Insights (4 cards from first file) -->
   <section id="insights" aria-label="Key insights">
     <div class="section-content">
       <h2>Key Insights</h2>
@@ -327,6 +344,24 @@
     </div>
   </section>
 
+  <!-- Datasets (template section kept; content not provided in first file, so neutral placeholder) -->
+  <section id="datasets" aria-label="Datasets">
+    <div class="section-content">
+      <h2>Datasets</h2>
+      <p>
+        Experiments are conducted on <strong>synthetic data</strong> and <strong>CIFAR-10</strong>.
+        (Add dataset links and example images here if you want a visual block like in CLIDE.)
+      </p>
+      <!-- Optional: add images later -->
+      <!--
+      <div class="dataset-images">
+        <img src="misc/dataset1.png" alt="Dataset examples">
+        <img src="misc/dataset2.png" alt="Dataset examples">
+      </div>
+      -->
+    </div>
+  </section>
+
   <!-- Related Papers Section -->
   <section id="related-papers" aria-label="Related Papers">
     <div class="section-content">
@@ -378,7 +413,7 @@
     &copy; 2026 Authors
   </footer>
 
-  <!-- Scripts -->
+  <!-- Scripts (UNCHANGED template scripts) -->
   <script>
     // Copy BibTeX
     const copyBtn = document.getElementById('copy-bibtex-btn');
@@ -395,7 +430,7 @@
         });
     });
 
-    // Modal poster fullscreen
+    // Modal teaser fullscreen
     (function(){
       const modal = document.getElementById('modal');
       const modalImg = document.getElementById('modal-img');
