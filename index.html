@@ -78,53 +78,175 @@ footer {
   <a href="#bibtex">BibTeX</a>
 </div>
 
-<section id="home">
-  <h1>InfoNCE Induces Gaussian Distribution</h1>
-  <h2>ICLR 2026</h2>
+<!-- Hero Section -->
+<section id="hero" aria-label="Hero section">
+  <div class="section-content">
+    <h1>InfoNCE Induces Gaussian Distribution</h1>
+    <h2>International Conference on Learning Representations (ICLR) 2026</h2>
 
-  <div class="authors">
-    Roy Betser*, Eyal Gofer*, Meir Yossef Levi, Guy Gilboa<br>
-    Technion — Israel Institute of Technology<br>
-    *Equal contribution
-  </div>
+    <!-- Authors -->
+    <div class="authors-container">
 
-  <div class="btn-row">
-    <a class="btn" href="#" target="_blank">Paper (PDF)</a>
-    <a class="btn" href="#" target="_blank">Code (coming soon)</a>
-    <a class="btn" href="#" target="_blank">arXiv</a>
-  </div>
-</section>
+      <div class="author">
+        <a href="#" aria-label="Roy Betser">
+          <img src="misc/roy.JPG" alt="Roy Betser portrait">
+        </a>
+        <a href="#">Roy Betser*</a>
+      </div>
 
-<section id="abstract">
-  <h2>Abstract</h2>
-  <div class="abstract-box">
-    <p>
-      Contrastive learning has become a cornerstone of modern representation learning.
-      We show that the population InfoNCE objective induces asymptotically Gaussian structure
-      in learned representations. Our analysis proceeds along two complementary routes:
-      an empirical idealization route based on alignment saturation and thin-shell concentration,
-      and a regularized route requiring milder assumptions.
-      In both cases, finite-dimensional projections converge to multivariate Gaussian distributions
-      as representation dimension grows.
+      <div class="author">
+        <a href="#" aria-label="Eyal Gofer">
+          <img src="misc/eyal.jpg" alt="Missing portrait">
+        </a>
+        <a href="#">Eyal Gofer*</a>
+      </div>
+
+      <div class="author">
+        <a href="https://yossilevii100.github.io/" aria-label="Meir Yossef Levi">
+          <img src="misc/yossi.jfif" alt="Meir Yossef Levi portrait">
+        </a>
+        <a href="#">Meir Yossef Levi</a>
+      </div>
+
+      <div class="author">
+        <a href="https://guygilboa.net.technion.ac.il" aria-label="Guy Gilboa">
+          <img src="misc/guy.png" alt="Guy Gilboa portrait">
+        </a>
+        <a href="https://guygilboa.net.technion.ac.il">Guy Gilboa</a>
+      </div>
+
+      <div class="vertical-line" aria-hidden="true"></div>
+
+      <!-- Affiliation -->
+      <div class="author">
+        <a href="https://www.technion.ac.il/en/" aria-label="Technion website">
+          <img src="misc/technion.png" alt="Technion logo" style="background:black;">
+        </a>
+        <a href="https://www.technion.ac.il/en/">Technion — Israel Institute of Technology</a>
+      </div>
+
+    </div>
+
+    <p style="text-align:center; margin-top:15px; font-size:0.9rem;">
+      * Equal contribution
     </p>
-    <p>
-      We support the theory with experiments on synthetic data, CIFAR-10, and pretrained
-      foundation models, demonstrating norm concentration and coordinate-wise Gaussianity
-      across architectures and settings.
-      These results provide a principled explanation for the widely observed Gaussian structure
-      of contrastive representations.
-    </p>
+
   </div>
 </section>
 
-<section id="contributions">
-  <h2>Main Contributions</h2>
-  <p><strong>Bounded Alignment.</strong> Alignment induced by InfoNCE is fundamentally constrained by augmentation mildness via an HGR-based bound.</p>
-  <p><strong>Uniformity on the Sphere.</strong> Along both analytical routes, normalized representations converge toward spherical uniformity.</p>
-  <p><strong>Asymptotic Gaussian Structure.</strong> Both normalized and unnormalized representations exhibit Gaussian finite-dimensional projections.</p>
-  <p><strong>Empirical Validation.</strong> Finite-dimensional experiments confirm the predicted Gaussian behavior across synthetic and real datasets.</p>
+<!-- Abstract + Poster + 4 Highlights -->
+<section id="abstract" aria-label="Abstract section">
+  <div class="section-content">
+    <h2>Abstract</h2>
+
+    <!-- Full-width abstract -->
+    <p>
+      Contrastive learning has become a cornerstone of modern representation learning, enabling scalable training on massive unlabeled data.
+      We show that the population InfoNCE objective induces asymptotically Gaussian structure in representations that emerge from contrastive training, and establish this through two complementary analytical routes.
+      We support the analysis with experiments on synthetic data and CIFAR-10, demonstrating consistent Gaussian behavior across settings and architectures.
+    </p>
+
+    <!-- Full-width poster -->
+    <div style="margin-top:18px;">
+      <img
+        id="abstract-teaser"
+        src="misc/poster.png"
+        alt="Poster"
+        style="width:100%; height:auto; border-radius:16px; box-shadow:0 10px 28px rgba(162,89,255,0.12); cursor:pointer;"
+      >
+    </div>
+
+    <!-- 4 cards -->
+    <div class="insights-container" style="margin-top:34px;">
+      <div class="insights-grid" role="list">
+
+        <div class="card-insight">
+          <div class="upper"><h3>Route 1: Empirical idealization</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/route1_plateau_thinshell.png" alt="Route 1 diagram"></div>
+            <div class="right">
+              <p>
+                Assuming (i) an alignment plateau and (ii) thin-shell norm concentration, the population objective reduces to spherical uniformity.
+                By the spherical CLT, fixed-dimensional projections become Gaussian as dimension grows.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-insight">
+          <div class="upper"><h3>Route 2: Regularized objective</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/route2_regularized.png" alt="Regularized route diagram"></div>
+            <div class="right">
+              <p>
+                With a vanishing convex regularizer promoting low norm and high entropy, the isotropic solution is prioritized at the population level.
+                This yields the same asymptotic Gaussian structure without relying on training dynamics and with a much milder assumption.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-insight">
+          <div class="upper"><h3>Synthetic experiments</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/synthetic_gaussianity.png" alt="Synthetic results"></div>
+            <div class="right">
+              <p>
+                Across Laplace, Gaussian-mixture, and discrete sparse-binary inputs, InfoNCE training drives norm concentration and coordinate-wise normality.
+                The binary setting rules out latent Gaussian recovery, supporting Gaussianity as an induced effect.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-insight">
+          <div class="upper"><h3>CIFAR-10: supervised vs contrastive (ResNet-18)</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/cifar_resnet18_supervised_vs_contrastive.png" alt="CIFAR comparison"></div>
+            <div class="right">
+              <p>
+                With the same ResNet-18 architecture, contrastive training yields near-Gaussian coordinates and tighter norm concentration,
+                while supervised training shows substantial deviations from Gaussianity.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </section>
 
+<!-- Related Papers Section -->
+  <section id="related-papers" aria-label="Related Papers">
+    <div class="section-content">
+      <h2>Related Papers</h2>
+      <ul>
+        <li>
+          <a href="https://yossilevii100.github.io/double-ellipsoid-clip/" target="_blank" rel="noopener">
+            The Double-Ellipsoid Geometry of CLIP (ICML 2025)
+          </a>
+        </li>
+        <li>
+          <a href="https://rbetser.github.io/W_CLIP/" target="_blank" rel="noopener">
+            Whitened CLIP as a Likelihood Surrogate of Images and Captions (ICML 2025)
+          </a>
+        </li>
+        <li>
+          <a href="https://rbetser.github.io/CLIDE/" target="_blank" rel="noopener">
+            General and Domain-Specific Zero-shot Detection of Generated Images via Conditional Likelihood (WACV 2026)
+          </a>
+        </li>
+        <li>
+          <a href="https://arxiv.org/abs/2512.03994" target="_blank" rel="noopener">
+            Training-Free Policy Violation Detection via Activation-Space Whitening in LLMs (DAI, AAAI workshop 2026)
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  
 <section id="bibtex">
   <h2>BibTeX</h2>
 <pre>
