@@ -279,69 +279,157 @@
     </div>
   </div>
 
-  <!-- Key Insights (4 cards from first file) -->
-  <section id="insights" aria-label="Key insights">
-    <div class="section-content">
-      <h2>Key Insights</h2>
-      <div class="insights-container">
-        <div class="insights-grid" role="list">
+<!-- Important Background -->
+<section id="background" aria-label="Important background">
+  <div class="section-content">
+    <h2>Important Background</h2>
+    <div class="insights-container">
+      <div class="insights-grid" role="list">
 
-          <div class="card-insight">
-            <div class="upper"><h3>Route 1: Empirical idealization</h3></div>
-            <div class="bottom">
-              <div class="left"><img src="misc/violin.png" alt="Route 1 diagram"></div>
-              <div class="right">
-                <p>
-                  Assuming (i) an alignment plateau and (ii) thin-shell norm concentration, the population objective reduces to spherical uniformity.
-                  By the spherical CLT, fixed-dimensional projections become Gaussian as dimension grows.
-                </p>
-              </div>
+        <div class="card-insight">
+          <div class="upper"><h3>Uniformity and alignment</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/background_uniformity_alignment.png" alt="Uniformity and alignment illustration"></div>
+            <div class="right">
+              <p>
+                Contrastive learning balances two forces: alignment pulls positive pairs together, while uniformity spreads representations across the space.
+              </p>
             </div>
           </div>
-
-          <div class="card-insight">
-            <div class="upper"><h3>Route 2: Regularized objective</h3></div>
-            <div class="bottom">
-              <div class="left"><img src="misc/route2_regularized.png" alt="Regularized route diagram"></div>
-              <div class="right">
-                <p>
-                  With a vanishing convex regularizer promoting low norm and high entropy, the isotropic solution is prioritized at the population level.
-                  This yields the same asymptotic Gaussian structure without relying on training dynamics and with a much milder assumption.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-insight">
-            <div class="upper"><h3>Synthetic experiments</h3></div>
-            <div class="bottom">
-              <div class="left"><img src="misc/norm_concentration.png" alt="Synthetic results"></div>
-              <div class="right">
-                <p>
-                  Across Laplace, Gaussian-mixture, and discrete sparse-binary inputs, InfoNCE training drives norm concentration and coordinate-wise normality.
-                  The binary setting rules out latent Gaussian recovery, supporting Gaussianity as an induced effect.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-insight">
-            <div class="upper"><h3>CIFAR-10: supervised vs contrastive (ResNet-18)</h3></div>
-            <div class="bottom">
-              <div class="left"><img src="misc/cifar_epochs_100.jpg" alt="CIFAR comparison"></div>
-              <div class="right">
-                <p>
-                  With the same ResNet-18 architecture, contrastive training yields near-Gaussian coordinates and tighter norm concentration,
-                  while supervised training shows substantial deviations from Gaussianity.
-                </p>
-              </div>
-            </div>
-          </div>
-
         </div>
+
+        <div class="card-insight">
+          <div class="upper"><h3>Maxwell–Poincaré Lemma</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/background_maxwell_poincare.png" alt="Maxwell-Poincare illustration"></div>
+            <div class="right">
+              <p>
+                A classical high-dimensional Lemma is that projections of points distributed uniformly on the sphere are approximately Gaussian.
+                This provides the bridge from spherical uniformity to Gaussian behavior in representation coordinates.
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- Key Insights -->
+<section id="insights" aria-label="Key insights">
+  <div class="section-content">
+    <h2>Key Insights</h2>
+    <div class="insights-container">
+      <div class="insights-grid" role="list">
+
+        <div class="card-insight">
+          <div class="upper"><h3>Alignment bound</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/alignment_bound_placeholder.png" alt="Alignment bound illustration"></div>
+            <div class="right">
+              <p>
+                The achievable alignment is fundamentally limited by the augmentation channel.
+                This bound formalizes how augmentation strength constrains the alignment term in the population objective.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-insight">
+          <div class="upper"><h3>Asymptotic convergence to spherical uniformity</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/spherical_uniformity_placeholder.png" alt="Spherical uniformity illustration"></div>
+            <div class="right">
+              <p>
+                In high dimensions, the population InfoNCE objective drives representations toward a uniform distribution on the sphere.
+                This geometric limit explains the emergence of Gaussian structure in fixed-dimensional projections.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-insight">
+          <div class="upper"><h3>Route 1: Alignment saturates</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/route1_placeholder.png" alt="Route 1 illustration"></div>
+            <div class="right">
+              <p>
+                Under an empirical idealization where alignment reaches a saturated value,
+                the objective reduces to spherical uniformity, yielding Gaussian projections asymptotically.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-insight">
+          <div class="upper"><h3>Route 2: Vanishing regularizer</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/route2_placeholder.png" alt="Route 2 illustration"></div>
+            <div class="right">
+              <p>
+                A vanishing convex regularizer favoring high entropy and low norm selects the spherical limit at the population level.
+                This yields asymptotic Gaussian structure under the milder assumption that the alignment bound is attainable at uniformity.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Empirical Results -->
+<section id="empirical-results" aria-label="Empirical results">
+  <div class="section-content">
+    <h2>Empirical Results</h2>
+    <div class="insights-container">
+      <div class="insights-grid" role="list">
+
+        <div class="card-insight">
+          <div class="upper"><h3>Synthetic data: Gaussian behavior emerges</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/synthetic_placeholder.png" alt="Synthetic experiments illustration"></div>
+            <div class="right">
+              <p>
+                Across diverse synthetic inputs, InfoNCE training with a simple linear encoder induces norm concentration and coordinate-wise Gaussianity.
+                This supports Gaussian structure as an emergent property of contrastive learning.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-insight">
+          <div class="upper"><h3>CIFAR-10: Gaussianity increases during training</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/cifar_progress_placeholder.png" alt="CIFAR training progression illustration"></div>
+            <div class="right">
+              <p>
+                On CIFAR-10, contrastive training progressively sharpens norm concentration and makes feature coordinates increasingly Gaussian.
+                The Gaussian trend becomes stronger as training advances.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-insight">
+          <div class="upper"><h3>Supervised vs. contrastive</h3></div>
+          <div class="bottom">
+            <div class="left"><img src="misc/supervised_vs_contrastive_placeholder.png" alt="Supervised versus contrastive illustration"></div>
+            <div class="right">
+              <p>
+                Using the same architecture (ResNet-18), contrastive training produces substantially more Gaussian representations than supervised training.
+                This highlights that the effect is tied to the contrastive objective rather than to architecture or data alone.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- Related Papers Section -->
   <section id="related-papers" aria-label="Related Papers">
